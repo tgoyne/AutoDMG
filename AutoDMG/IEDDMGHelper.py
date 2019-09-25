@@ -77,7 +77,7 @@ class IEDDMGHelper(NSObject):
                 try:
                     image_path = dmgInfo["image-path"]
                     alias_path = ""
-                    bookmark = CFURLCreateBookmarkDataFromAliasRecord(kCFAllocatorDefault, dmgInfo["image-alias"])
+                    bookmark = CFURLCreateBookmarkDataFromAliasRecord(kCFAllocatorDefault, dmgInfo.get("image-alias", None))
                     if bookmark:
                         url, stale, error = CFURLCreateByResolvingBookmarkData(None, bookmark,
                                                                                kCFBookmarkResolutionWithoutUIMask,
