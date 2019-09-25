@@ -147,7 +147,7 @@ class IEDDMGHelper(NSObject):
                     if "mount-point" in partition:
                         deviceId = partition.get("dev-entry", "").rpartition("/")[-1]
                         roles = apfsVolumes.get(deviceId, {}).get("Roles", [])
-                        if roles:
+                        if any(role != 'System' for role in roles):
                             LogDebug("Skipping %@ which has role %@",
                                 partition["mount-point"],
                                 str(roles))
