@@ -178,7 +178,7 @@ if [[ -z "$sysimg" ]]; then
         echo "IED:FAILURE:Failed to mount disk image for install, return code $result."
         exit 101
     fi
-    sparsemount=$(egrep '/Volumes/' <<< "$mountoutput" | head -1 | cut -f3)
+    sparsemount=$(egrep '/Volumes/' <<< "$mountoutput" | tail -1 | cut -f3)
     touch "$sparsemount/.workaround-mojave-b4-installer-bug"
     dmgmounts+=( $(egrep 'Apple_(H|AP)FS' <<< "$mountoutput" | awk '{print $1}') )
 else
@@ -191,13 +191,13 @@ else
         echo "IED:FAILURE:Failed to create shadow image for install, return code $result."
         exit 101
     fi
-    targetdev=$(echo "$shadowoutput" | egrep '/Volumes/' | head -1 | awk '{print $1}')
+    targetdev=$(echo "$shadowoutput" | egrep '/Volumes/' | tail -1 | awk '{print $1}')
     echo "IED:MSG:Renaming $targetdev to $volname"
     if ! diskutil rename "$targetdev" "$volname"; then
         echo "IED:FAILURE:Failed to rename install volume."
         exit 101
     fi
-    sparsemount=$(egrep '/Volumes/' <<< "$shadowoutput" | head -1 | cut -f3)
+    sparsemount=$(egrep '/Volumes/' <<< "$shadowoutput" | tail -1 | cut -f3)
     dmgmounts+=( $(egrep 'Apple_(H|AP)FS' <<< "$shadowoutput" | awk '{print $1}') )
     # If we're using a system image as the source, read the version and build
     # numbers before the first install.
