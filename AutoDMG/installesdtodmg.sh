@@ -290,9 +290,9 @@ unmount_dmgs
 # Convert the sparse image to a compressed image.
 echo "IED:MSG:Converting disk image to read only"
 if [[ -z "$sysimg" ]]; then
-    hdiutil convert -puppetstrings -format UDZO "$sparsedmg" -o "$compresseddmg"
+    hdiutil convert -puppetstrings -format ULFO "$sparsedmg" -o "$compresseddmg"
 else
-    hdiutil convert -puppetstrings -format UDZO -shadow "$shadowfile" "$sysimg" -o "$compresseddmg"
+    hdiutil convert -puppetstrings -format ULFO -shadow "$shadowfile" "$sysimg" -o "$compresseddmg"
 fi
 if [[ $? -ne 0 ]]; then
     echo "IED:FAILURE:Disk image conversion failed, see the log for details."
